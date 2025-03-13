@@ -1,19 +1,146 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moja Online Prodavnica</title>
-  </head>
-  <body>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="loading-screen" id="loading-screen">
+        <div class="loader"></div>
+    </div>
+
     <header>
-      <h1>Početna</h1>
+        <div class="logo">
+            <img src="logo.png" alt="Logo" class="logo-img">
+        </div>
+        <h1>Početna</h1>
+        <div class="top-bar">
+            <nav>
+                <ul>
+                    <li><a href="#">Kategorije</a></li>
+                    <li><a href="#">Shopovi</a></li>
+                    <li><a href="#">Marketing</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Objavi oglas</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    <nav>
-      <ul>
-          <li><a href="#">Kategorije</a></li>
-          <li><a href="#">Shopovi</a></li>
-          <li><a href="#">Marketing</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Objavi oglas</a></li>
-      </ul>
-    </nav>
-    
+
+    <main>
+        <section class="search-section">
+            <input type="text" placeholder="Pretraži proizvode..." class="search-input">
+        </section>
+
+        <section>
+            <h2>Ponuda</h2>
+            <div class="items">
+                <div class="item">
+                    <img src="laptop.png" alt="Gaming Laptop" class="item-image">
+                    <h3>Gaming Laptop</h3>
+                    <p class="price">1900 KM</p>
+                    <div class="korpa">
+                        <input type="number" class="quantity-input" value="1" min="1">
+                        <button class="dodaj-u-korpu" data-price="1900">Dodaj u korpu</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="iphone.png" alt="Iphone 14 Pro" class="item-image">
+                    <h3>Iphone 14 Pro</h3>
+                    <p class="price">1499 KM</p>
+                    <div class="korpa">
+                        <input type="number" class="quantity-input" value="1" min="1">
+                        <button class="dodaj-u-korpu" data-price="1499">Dodaj u korpu</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="kamera.png" alt="Canon Camera" class="item-image">
+                    <h3>Kamera Canon</h3>
+                    <p class="price">899 KM</p>
+                    <div class="korpa">
+                        <input type="number" class="quantity-input" value="1" min="1">
+                        <button class="dodaj-u-korpu" data-price="899">Dodaj u korpu</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="bmw.png" alt="BMW 520 G30" class="item-image">
+                    <h3>BMW 520 G30</h3>
+                    <p class="price">65000 KM</p>
+                    <div class="korpa">
+                        <input type="number" class="quantity-input" value="1" min="1">
+                        <button class="dodaj-u-korpu" data-price="65000">Dodaj u korpu</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="motor.png" alt="Yamaha FZR6" class="item-image">
+                    <h3>Yamaha FZR6</h3>
+                    <p class="price">19000 KM</p>
+                    <div class="korpa">
+                        <input type="number" class="quantity-input" value="1" min="1">
+                        <button class="dodaj-u-korpu" data-price="19000">Dodaj u korpu</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="sat.png" alt="Rolex Watch" class="item-image">
+                    <h3>Rolex Sat</h3>
+                    <p class="price">5000 KM</p>
+                    <div class="korpa">
+                        <input type="number" class="quantity-input" value="1" min="1">
+                        <button class="dodaj-u-korpu" data-price="5000">Dodaj u korpu</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="stan.png" alt="Stan u Bijeljini" class="item-image">
+                    <h3>Stan u Bijeljini</h3>
+                    <p class="price">25000 KM</p>
+                    <div class="korpa">
+                        <input type="number" class="quantity-input" value="1" min="1">
+                        <button class="dodaj-u-korpu" data-price="25000">Dodaj u korpu</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="total">
+                <div class="total-box">
+                    <h3>Ukupna Cijena:</h3>
+                    <span id="total-price">0 KM</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="notification" id="notification">Proizvod dodat u korpu!</div>
+
+    <script>
+        window.addEventListener('load', () => {
+            document.getElementById('loading-screen').style.display = 'none';
+        });
+
+        let totalPrice = 0;
+        const totalPriceElement = document.getElementById('total-price');
+
+        document.querySelectorAll('.dodaj-u-korpu').forEach(button => {
+            button.addEventListener('click', function () {
+                const price = parseInt(this.getAttribute('data-price'));
+                const quantity = parseInt(this.previousElementSibling.value);
+                totalPrice += price * quantity;
+                totalPriceElement.textContent = totalPrice + ' KM';
+
+                const notification = document.getElementById('notification');
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000); // Poruka traje 5 sekundi
+
+                totalPriceElement.classList.add('highlight');
+                setTimeout(() => {
+                    totalPriceElement.classList.remove('highlight');
+                }, 3000); // Fade efekat na ukupnoj ceni traje 3 sekunde
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91c43cd898f96cb4',t:'MTc0MTI4OTExMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91fde982183070b0',t:'MTc0MTg5Mzg3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
